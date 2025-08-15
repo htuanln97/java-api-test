@@ -38,7 +38,7 @@ cd <project-folder>
 Run Maven to clean and build the project, and download dependencies:
 
 ```bash
-mvn clean install
+mvn clean install -DskipTests=true 
 ```
 
 ### 3. Run TestNG Tests
