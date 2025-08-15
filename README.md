@@ -68,5 +68,5 @@ mvn test -Denv=stage
 or you can direct edit the enviroment via `src/test/resources/suites/test-suite.xml`
 
 ```
-	<parameter name="env" value="test" />
+<parameter name="env" value="test" />
 ```
