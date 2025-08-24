@@ -36,7 +36,7 @@ jobs:
       - name: Run API tests with Maven
         run: mvn test
 
-       - name: Load test report history
+      - name: Load test report history
         uses: actions/checkout@v3
         if: always()
         continue-on-error: true
