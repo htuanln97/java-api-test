@@ -36,13 +36,18 @@ jobs:
       - name: Run API tests with Maven
         run: mvn test
 
-      - name: Generate Allure report
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
         if: always()
-        run: mvn allure:report
-
-      - name: Archive Allure report
-        if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: allure-report
-          path: target/site/allure-maven-plugin
+          gh_pages: main
+          allure_history: allure-history
+          allure_results: build/allure-results
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: main
+          publish_dir: allure-history
