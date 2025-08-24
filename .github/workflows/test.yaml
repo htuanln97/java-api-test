@@ -59,3 +59,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: report-depoyment
           publish_dir: allure-history
+
+      - name: Show Report Link
+        if: always()
+        run: echo "Allure Report available at: https://htuanln97.github.io/java-api-test/"
+
