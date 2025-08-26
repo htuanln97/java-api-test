@@ -86,7 +86,7 @@ jobs:
           REPO=${{ github.repository }}
           RUN_URL="https://github.com/$REPO/actions/runs/${{ github.run_id }}"
 
-          MESSAGE=":robot_face: API Tests *$STATUS*\n:page_facing_up:Report: https://htuanln97.github.io/java-api-test/$LATEST/\nGitHub Actions Run: <${RUN_URL}|#${RUN_NUMBER}>"
+          MESSAGE=":robot_face: API Tests *$STATUS*\n:bar_chart: Report: https://htuanln97.github.io/java-api-test/$LATEST/\n:gear: GitHub Actions Run: <${RUN_URL}|#${RUN_NUMBER}>"
     
           curl -X POST -H 'Content-type: application/json' \
           --data "{
