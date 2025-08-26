@@ -70,3 +70,28 @@ or you can direct edit the enviroment via `src/test/resources/suites/test-suite.
 ```
 <parameter name="env" value="test" />
 ```
+---
+## Daily API Test Reports
+
+This project runs **API tests** on a daily schedule using **GitHub Actions** and automatically publishes the test report.
+
+### Workflow Overview
+
+1. **Schedule Run**
+   - The workflow is triggered daily using the GitHub Actions `schedule` event.
+   - It executes all API tests and generates test results.
+
+2. **Publish Report**
+   - The test report is generated using **Allure**.
+   - The report is pushed to a separate branch named `report-deployment`.
+
+3. **GitHub Pages Build**
+   - GitHub Pages automatically builds the report from the `report-deployment` branch.
+   - The report is accessible online at `https://<username>.github.io/<repository>/`.
+
+4. **Slack Notification**
+   - After the workflow completes, a notification is sent to **Slack**.
+   - The notification includes:
+     - Workflow run status (`success` or `failure`)
+     - Link to the published Allure report
+     - Link to the GitHub Actions workflow run
