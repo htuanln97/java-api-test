@@ -25,14 +25,11 @@ jobs:
           done
 
       - name: Notify Slack
+        if: always()
         run: |
-          STATUS=${{ github.event.workflow_run.conclusion }}
-          # Bạn có thể hardcode folder nếu luôn lấy latest số mới nhất, hoặc query lại
-          LATEST=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/htuanln97/java-api-test/contents/allure-history | jq -r '[.[] | select(.type=="dir" and (.name|test("^[0-9]+$"))) | .name] | sort | last')
-          
+          STATUS=${{ job.status }}
           curl -X POST -H 'Content-type: application/json' \
           --data "{
-            \"text\": \":robot_face: API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/$LATEST/\"
+          \"text\": \":robot_face: API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/$LATEST/\"
           }" \
           ${{ secrets.SLACK_WEBHOOK_URL }}
