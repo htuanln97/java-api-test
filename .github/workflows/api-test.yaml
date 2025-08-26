@@ -53,7 +53,6 @@ jobs:
           allure_results: allure-results
 
       - name: Get latest report folder
-        id: get_report
         if: always()
         run: |
           echo "📂 Checking allure-history contents..."
@@ -63,8 +62,7 @@ jobs:
           latest=$(ls -1t allure-history | grep -E '^[0-9]+$' | head -1)
 
           echo "✅ Latest report folder (just created): $latest"
-          echo "LATEST=$latest" >> $GITHUB_ENV
-          echo "latest=$latest" >> $GITHUB_OUTPUT
+          echo "latest_report_id=$latest" >> $GITHUB_ENV
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
@@ -76,7 +74,7 @@ jobs:
 
       - name: Show Report Link
         if: always()
-        run: echo "Allure Report available at https://htuanln97.github.io/java-api-test/$LATEST/"
+        run: echo "Allure Report available at https://htuanln97.github.io/java-api-test/$latest_report_id/"
 
       - name: Notify Slack
         if: always()
@@ -84,7 +82,7 @@ jobs:
           STATUS=${{ job.status }}
           curl -X POST -H 'Content-type: application/json' \
           --data "{
-          \"text\": \":robot_face: API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/$LATEST/\"
+          \"text\": \":robot_face: API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/$latest_report_id/\"
           }" \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
