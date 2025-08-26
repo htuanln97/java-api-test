@@ -53,6 +53,7 @@ jobs:
           allure_results: allure-results
 
       - name: Get latest report folder
+        if: always()
         id: get_report
         run: |
           echo "📂 Checking allure-history contents..."
