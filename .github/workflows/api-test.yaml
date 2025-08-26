@@ -82,9 +82,13 @@ jobs:
         if: always()
         run: |
           STATUS=${{ job.status }}
+          RUN_NUMBER=${{ github.run_number }}
+          REPO=${{ github.repository }}
+          RUN_URL="https://github.com/$REPO/actions/runs/${{ github.run_id }}"
+    
           curl -X POST -H 'Content-type: application/json' \
           --data "{
-          \"text\": \":robot_face: API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/$LATEST/\"
+          \"text\": \":robot_face: API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/$LATEST/ — <${RUN_URL}|GitHub Actions Run #${RUN_NUMBER}> \"
           }" \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
