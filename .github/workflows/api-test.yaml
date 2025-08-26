@@ -1,12 +1,12 @@
 name: API Tests
 
 on:
-  push:          # chạy khi push code
+  push:         
     branches:
-      - main     # hoặc branch bạn muốn (develop, master, …)
-  workflow_dispatch:   # cho phép chạy tay luôn
+      - master     
+  workflow_dispatch:
   schedule:
-    - cron: "0 2 * * *" # vẫn giữ schedule chạy 9h sáng VN hằng ngày
+    - cron: "0 13 * * 1-5"
 
 jobs:
   test:
