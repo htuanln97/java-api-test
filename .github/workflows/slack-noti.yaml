@@ -25,6 +25,7 @@ jobs:
           done
 
       - name: Notify Slack
+        id: get_report
         if: always()
         run: |
           STATUS=${{ job.status }}

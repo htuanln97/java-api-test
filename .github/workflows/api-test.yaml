@@ -53,6 +53,7 @@ jobs:
           allure_results: allure-results
 
       - name: Get latest report folder
+        id: get_report
         if: always()
         run: |
           echo "📂 Checking allure-history contents..."
@@ -62,7 +63,7 @@ jobs:
           latest=$(ls -1t allure-history | grep -E '^[0-9]+$' | head -1)
 
           echo "✅ Latest report folder (just created): $latest"
-          echo "latest_report_id=$latest" >> $GITHUB_ENV
+          echo "latest_report_id=$latest" >> $GITHUB_OUTPUT
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
