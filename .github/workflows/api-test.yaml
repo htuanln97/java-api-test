@@ -76,14 +76,4 @@ jobs:
         if: always()
         run: echo "Allure Report available at https://htuanln97.github.io/java-api-test/$latest_report_id/"
 
-      - name: Notify Slack
-        if: always()
-        run: |
-          STATUS=${{ job.status }}
-          curl -X POST -H 'Content-type: application/json' \
-          --data "{
-          \"text\": \":robot_face: API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/$latest_report_id/\"
-          }" \
-          ${{ secrets.SLACK_WEBHOOK_URL }}
-
 
