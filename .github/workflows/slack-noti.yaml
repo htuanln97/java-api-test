@@ -1,0 +1,38 @@
+name: Notify Slack
+
+on:
+  workflow_run:
+    workflows: ["API Tests"]
+    types:
+      - completed
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for GitHub Pages to deploy
+        run: |
+          echo "⏳ Waiting for GitHub Pages to finish deploying..."
+          for i in {1..30}; do
+            status=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              https://api.github.com/repos/htuanln97/java-api-test/pages/builds/latest | jq -r .status)
+            echo "GitHub Pages status: $status"
+            if [ "$status" = "built" ]; then
+              echo "✅ Pages deployed!"
+              break
+            fi
+            sleep 5
+          done
+
+      - name: Notify Slack
+        run: |
+          STATUS=${{ github.event.workflow_run.conclusion }}
+          # Bạn có thể hardcode folder nếu luôn lấy latest số mới nhất, hoặc query lại
+          LATEST=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/htuanln97/java-api-test/contents/allure-history | jq -r '[.[] | select(.type=="dir" and (.name|test("^[0-9]+$"))) | .name] | sort | last')
+          
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{
+            \"text\": \":robot_face: API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/$LATEST/\"
+          }" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
