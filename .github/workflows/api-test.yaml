@@ -53,20 +53,16 @@ jobs:
           allure_results: allure-results
 
       - name: Get latest report folder
-        if: always()
         id: get_report
+        if: always()
         run: |
           echo "📂 Checking allure-history contents..."
-          ls -1 allure-history
+          ls -lt allure-history | head -20
+          
+          # Lấy folder mới nhất theo thời gian cập nhật
+          latest=$(ls -1t allure-history | grep -E '^[0-9]+$' | head -1)
 
-          latest=$(ls -1 allure-history | grep -E '^[0-9]+$' | sort -n | tail -1)
-
-          if [ -z "$latest" ]; then
-            echo "⚠️ Không tìm thấy folder số, dùng last-history"
-            latest="last-history"
-          fi
-
-          echo "✅ Latest report folder: $latest"
+          echo "✅ Latest report folder (just created): $latest"
           echo "LATEST=$latest" >> $GITHUB_ENV
           echo "latest=$latest" >> $GITHUB_OUTPUT
 
