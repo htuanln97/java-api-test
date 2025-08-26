@@ -64,6 +64,7 @@ jobs:
 
           echo "✅ Latest report folder (just created): $latest"
           echo "latest_report_id=$latest" >> $GITHUB_OUTPUT
+          echo "latest_report_id=$latest" >> $GITHUB_ENV
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
