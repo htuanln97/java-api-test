@@ -57,20 +57,18 @@ jobs:
         run: |
           echo "📂 Checking allure-history contents..."
           ls -R allure-history || echo "⚠️ allure-history not found"
-    
-          # Tìm folder dạng số
+          
           latest=$(find allure-history -maxdepth 1 -type d -regex '.*/[0-9]\+' | sed 's#.*/##' | sort -n | tail -1)
-
+          
           if [ -z "$latest" ]; then
-          echo "⚠️ Không tìm thấy folder số, fallback vào 'history'"
-          latest="history"
+            echo "⚠️ Không tìm thấy folder số, fallback vào 'history'"
+            latest="history"
           fi
-          echo "Latest report folder: $latest"
+          
+          echo "✅ Latest report folder: $latest"
           echo "LATEST=$latest" >> $GITHUB_ENV
-
-    echo "Latest report folder: $latest"
-    echo "LATEST=$latest" >> $GITHUB_ENV
-
+          echo "latest=$latest" >> $GITHUB_OUTPUT
+          
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
         if: always()
