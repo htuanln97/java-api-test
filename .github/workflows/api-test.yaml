@@ -84,7 +84,7 @@ jobs:
           STATUS=${{ job.status }}
           curl -X POST -H 'Content-type: application/json' \
           --data "{
-          \"text\": \"🚥 API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/\"
+          \"text\": \":robot_face: API Tests *$STATUS* — Report: https://htuanln97.github.io/java-api-test/$LATEST/\"
           }" \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
