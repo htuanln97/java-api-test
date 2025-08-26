@@ -76,7 +76,7 @@ jobs:
 
       - name: Show Report Link
         if: always()
-        run: echo "Allure Report available at https://htuanln97.github.io/java-api-test/"
+        run: echo "Allure Report available at https://htuanln97.github.io/java-api-test/$LATEST/"
 
       - name: Notify Slack
         if: always()
