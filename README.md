@@ -54,7 +54,7 @@ mvn test
 After tests complete, generate and open the Allure report:
 
 ```bash
-allure serve target/allure-report
+allure serve allure-results
 ```
 
 ### 5. Run Tests on Different Environments (Optional)
