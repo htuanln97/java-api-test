@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
@@ -14,7 +15,10 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Listeners(listener.TestListener.class)
 public class TestBase {
 	protected Properties prop;
 	protected static String token;
@@ -23,6 +27,7 @@ public class TestBase {
 	@Parameters({"env"})
 	@Step("Init properties file and get enviroment from xml file")
 	public void setUp(@Optional("test") String env) {
+		log.info("Set up - load config for env: [{}]", env);
 		prop = initProperties(env);
 	}
 
@@ -37,8 +42,7 @@ public class TestBase {
 		if (token != null && !token.isEmpty()) {
 			req.header("Authorization", "Bearer " + token);
 		}
-		 System.out.println("=== Request Headers ===");
-		    req.log().headers();
+		    req.log().all();
 		return req;
 	}
 
